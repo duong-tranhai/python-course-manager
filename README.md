@@ -4,6 +4,23 @@ This project is the backend system for a full-featured Course Manager applicatio
 
 It supports student enrollment, lesson and quiz management, attendance tracking, progress monitoring, and role-based access control for students, teachers, and administrators.
 
+1. Clone the repository:
+git clone https://github.com/your-username/course-manager-backend.git
+cd course-manager-backend
+
+2. Install dependencies:
+
+    pip install -r requirements.txt
+
+3. Configure environment variables:
+Create a .env file for database URL, etc.
+
+DATABASE_URL=postgresql://user:password@localhost:5432/course_manager_db
+
+4. Start the FastAPI server:
+uvicorn app.main:app --reload
+
+
 🚀 Features
 
 🧑‍🏫 Courses and Lessons

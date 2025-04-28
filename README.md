@@ -1,16 +1,40 @@
-Course Manager Backend (FastAPI)
+# Course Manager Backend (FastAPI)
 
 This project is the backend system for a full-featured Course Manager application, built using FastAPI and PostgreSQL.
 
 It supports student enrollment, lesson and quiz management, attendance tracking, progress monitoring, and role-based access control for students, teachers, and administrators.
 
+# Requirements
+Python 3.10 or higher
+(Recommended: Python 3.10.x or 3.11.x for FastAPI and Pydantic v2 compatibility)
+
+PostgreSQL 13 or higher
+
+# INSTALLATION GUIDE
 1. Clone the repository:
+
 git clone https://github.com/your-username/course-manager-backend.git
+
 cd course-manager-backend
 
-2. Install dependencies:
+2. Create and Activate a Virtual Environment:
 
-    pip install -r requirements.txt
+Windows
+
+      python -m venv venv
+
+      venv\Scripts\activate
+
+Mac/Linux
+
+      python3 -m venv venv
+
+      source venv/bin/activate
+
+
+3. Install dependencies:
+
+pip install -r requirements.txt
 
 3. Configure environment variables:
 Create a .env file for database URL, etc.
@@ -21,7 +45,7 @@ DATABASE_URL=postgresql://user:password@localhost:5432/course_manager_db
 uvicorn app.main:app --reload
 
 
-🚀 Features
+# Features
 
 🧑‍🏫 Courses and Lessons
 
@@ -81,7 +105,7 @@ View enrollment and completion statistics
 
 (Planned) Track login activities for security
 
-🛠 Technology Stack
+# Technology Stack
 
 Layer	Technology
 

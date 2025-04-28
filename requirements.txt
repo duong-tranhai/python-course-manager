@@ -1,0 +1,10 @@
+SQLAlchemy~=2.0.40
+fastapi~=0.115.12
+python-dotenv~=1.1.0
+pydantic~=2.11.1
+bcrypt~=4.3.0
+pydantic-settings~=2.8.1
+passlib~=1.7.4
+python-jose~=3.4.0
+starlette~=0.46.1
+alembic~=1.15.2

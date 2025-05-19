@@ -7,7 +7,7 @@ from ..models.user import User
 from ..models.user_course import UserCourse
 from ..models.user_lesson_progress import UserLessonProgress
 from ..schemas import course as schema
-from ..schemas.course import CourseResponse, CourseWithProgress
+from ..schemas.course import CourseWithProgress
 
 
 def create_course(db: Session, course: schema.CourseCreate, creator_id: int):
@@ -136,3 +136,15 @@ def delete_course(course_id: int, db: Session, creator_id: int):
     db.delete(course)
     db.commit()
     return {"message": "Course deleted!"}
+
+def get_course_recommendations(
+    user_id: int,
+    db: Session
+):
+    # Subquery to find enrolled course IDs
+    subquery = db.query(UserCourse.course_id).filter_by(user_id=user_id).subquery()
+
+    # Recommend all courses not enrolled
+    courses = db.query(Course).filter(Course.id.notin_(subquery)).limit(5).all()
+
+    return courses

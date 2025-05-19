@@ -11,6 +11,7 @@ from starlette.responses import JSONResponse
 from ..auth import verify_password, create_access_token, ALGORITHM, SECRET_KEY, create_refresh_token
 from ..crud import user as user_crud
 from ..database import SessionLocal
+from ..helpers.audit import log_action
 from ..models.user import User
 from ..schemas.user import UserResponse, UserCreate
 
@@ -42,6 +43,7 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
         secure=False,  # set to True in production
         samesite="lax"
     )
+    log_action(db, user_id=user.id, action="login", detail="User logged in")
     return response
 
 @router.post("/register", response_model=UserResponse)

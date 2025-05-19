@@ -4,7 +4,7 @@ from ..models.role import Role
 from ..schemas import role as schema
 
 
-def create_role(db: Session, role: schema.RoleCreate):
+def create_role(db: Session, role: schema.RoleBase):
     db_role = Role(**role.dict())
     db.add(db_role)
     db.commit()

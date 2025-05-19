@@ -5,9 +5,10 @@ from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
-from app.models.user import User
 
 from app.database import SessionLocal
+from app.models.user import User
+
 
 def get_db():
     db = SessionLocal()
@@ -51,6 +52,7 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     except JWTError:
         raise credentials_exception
 
+    # note with this query: need to join Role if we want to get the role.name
     user = db.query(User).filter(User.username == username).first()
     if user is None:
         raise credentials_exception

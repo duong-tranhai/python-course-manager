@@ -6,10 +6,12 @@ from sqlalchemy.sql import func
 from app.models.course import Course
 from app.models.lesson import Lesson
 from app.models.role import Role
+from app.models.system_log import SystemLog
 from app.models.user import User
 from app.models.user_course import UserCourse
 from app.models.user_lesson_progress import UserLessonProgress
 from app.schemas import course as schema
+from app.schemas.role import RoleBase
 
 
 def get_admin_dashboard_data(db: Session):
@@ -138,3 +140,43 @@ def delete_course(course_id: int, db: Session):
     db.delete(course)
     db.commit()
     return {"message": "Course deleted successfully"}
+
+def get_all_roles(db: Session):
+    return db.query(Role).all()
+
+def create_role(role_data: RoleBase, db: Session):
+    if db.query(Role).filter_by(name=role_data.name).first():
+        raise HTTPException(status_code=400, detail="Role already exists")
+    role = Role(**role_data.model_dump())
+    db.add(role)
+    db.commit()
+    db.refresh(role)
+    return role
+
+def update_role(role_id: int, update_data: RoleBase, db: Session):
+    role = db.query(Role).get(role_id)
+    if not role:
+        raise HTTPException(status_code=404, detail="Role not found")
+    role.name = update_data.name
+    db.commit()
+    return role
+
+def delete_role(role_id: int, db: Session):
+    role = db.query(Role).get(role_id)
+    if not role:
+        raise HTTPException(status_code=404, detail="Role not found")
+    db.delete(role)
+    db.commit()
+    return {"message": "Role deleted"}
+
+def assign_role_to_user(user_id: int, role_id: int, db: Session):
+    user = db.query(User).get(user_id)
+    role = db.query(Role).get(role_id)
+    if not user or not role:
+        raise HTTPException(status_code=404, detail="User or Role not found")
+    user.role_id = role.id
+    db.commit()
+    return {"message": f"Role '{role.name}' assigned to user '{user.username}'"}
+
+def get_system_logs(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(SystemLog).order_by(SystemLog.timestamp.desc()).offset(skip).limit(limit).all()

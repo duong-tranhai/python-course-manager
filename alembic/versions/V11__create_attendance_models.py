@@ -15,15 +15,22 @@ def upgrade():
         sa.Column('start_time', sa.DateTime),
         sa.Column('end_time', sa.DateTime),
         sa.Column('type', sa.String),
+        sa.Column('summary', sa.String),
     )
 
     op.create_table(
-        'student_attendance',
+        'student_attendances',
         sa.Column('id', sa.Integer, primary_key=True),
         sa.Column('user_id', sa.Integer, sa.ForeignKey('users.id')),
         sa.Column('attendance_session_id', sa.Integer, sa.ForeignKey('attendance_sessions.id')),
         sa.Column('status', sa.String),
-        sa.Column('timestamp', sa.DateTime),
+        sa.Column('check_in_time', sa.DateTime),
+    )
+
+    op.create_unique_constraint(
+        'uix_attendance_session_student',
+        'student_attendances',
+        ['attendance_session_id', 'user_id']
     )
 
 def downgrade():

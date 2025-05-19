@@ -11,10 +11,12 @@ class User(Base):
     username = Column(String, unique=True, index=True)
     password = Column(String, nullable=False)
     email = Column(String, unique=True, index=True)
-    role_id = Column(Integer, ForeignKey("roles.id"))
 
+    role_id = Column(Integer, ForeignKey("roles.id"))
     role = relationship("Role", back_populates="users")
+
+    # store the courses which user created - one-to-many
     created_courses = relationship("Course", back_populates="creator")
 
-    # store the courses which user is enrolling
+    # store the courses which user is enrolling - many-to-many
     courses = relationship("UserCourse", back_populates="user")

@@ -11,7 +11,7 @@ def upgrade():
             VALUES (
                 'admin',
                 'admin@example.com',
-                '$2b$12$3qUOnxiZ5TntIKtnQ9EkhOjB3Fcj2NkTKLZqLUh7RI2uwrrI06Gta',
+                '$2b$12$lKznmCQ5fkv.sodak2d0HupU/e/AiRuiL8d1jle1xaZxTYPDCABlu',
                 3
             )
             ON CONFLICT (id) DO NOTHING;

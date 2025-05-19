@@ -14,13 +14,15 @@ class LessonResponse(LessonBase):
     id: int
     course_id: int
 
-    class Config:
-        orm_mode = True
+    model_config = {
+        "from_attributes": True
+    }
 
 class SimpleLessonResponse(BaseModel):
     id: int
     title: str
-    description: str
+    content: str
 
-    class Config:
-        orm_mode = True
+    model_config = {
+        "from_attributes": True
+    }

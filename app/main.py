@@ -9,7 +9,8 @@ from starlette.status import HTTP_401_UNAUTHORIZED
 
 from app.auth import get_current_user
 from app.routers import user as user_router, role as role_router, course as course_router, auth as auth_router, \
-    lesson as lesson_router, quiz as quiz_router, admin as admin_router
+    lesson as lesson_router, quiz as quiz_router, admin as admin_router,  attendance as attendance_router
+from app.scheduler import start_scheduler
 
 app = FastAPI()
 
@@ -42,7 +43,7 @@ app.add_middleware(
 @app.on_event("startup")
 def on_startup():
     subprocess.run(["alembic", "upgrade", "head"])
-
+    start_scheduler()
 
 app.include_router(user_router.router,dependencies=[Depends(get_current_user)])
 app.include_router(role_router.router, dependencies=[Depends(get_current_user)])
@@ -50,4 +51,5 @@ app.include_router(course_router.router, dependencies=[Depends(get_current_user)
 app.include_router(lesson_router.router, dependencies=[Depends(get_current_user)])
 app.include_router(quiz_router.router, dependencies=[Depends(get_current_user)])
 app.include_router(admin_router.router, dependencies=[Depends(get_current_user)])
+app.include_router(attendance_router.router, dependencies=[Depends(get_current_user)])
 app.include_router(auth_router.router)

@@ -8,6 +8,7 @@ from sqlalchemy.orm import Session
 from app.auth import get_current_user
 from app.crud import quiz as quiz_crud
 from app.database import SessionLocal
+from app.helpers.audit import log_action
 from app.models.user import User
 from app.schemas.quiz import QuizCreate, QuizSubmitRequest, QuizUpdate
 
@@ -33,6 +34,8 @@ def get_quiz_by_lesson(lesson_id: int, db: Session = Depends(get_db), current_us
 
 @router.post("/submit")
 def submit_quiz(submission: QuizSubmitRequest, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    log_action(db, user_id=current_user.id, action="quiz_submitted",
+               detail=f"Quiz ID: {submission.quiz_id}")
     return quiz_crud.submit_quiz(submission, user_id=current_user.id, db=db)
 
 @router.put("/{quiz_id}")

@@ -11,43 +11,47 @@ Python 3.10 or higher
 PostgreSQL 13 or higher
 
 # INSTALLATION GUIDE
-1. Clone the repository:
-
-git clone https://github.com/your-username/course-manager-backend.git
+## Clone the repository:
+```
+git clone https://github.com/duong-tranhai/course-manager-backend.git
 
 cd course-manager-backend
+```
 
-2. Create and Activate a Virtual Environment:
+## Create and Activate a Virtual Environment:
 
-Windows
+### Windows
+```
+python -m venv venv
 
-      python -m venv venv
+venv\Scripts\activate
+```
+### Mac/Linux
+```
+python3 -m venv venv
 
-      venv\Scripts\activate
-
-Mac/Linux
-
-      python3 -m venv venv
-
-      source venv/bin/activate
-
+source venv/bin/activate
+```
 
 3. Install dependencies:
 
+```
 pip install -r requirements.txt
+```
 
-3. Configure environment variables:
+## Configure environment variables:
 Create a .env file for database URL, etc.
-
+```
 DATABASE_URL=postgresql://user:password@localhost:5432/course_manager_db
-
-4. Start the FastAPI server:
+```
+## Start the FastAPI server:
+```
 uvicorn app.main:app --reload
-
+```
 
 # Features
 
-🧑‍🏫 Courses and Lessons
+## Courses and Lessons
 
 1. Teachers/Admins can create, update, delete courses
 
@@ -55,14 +59,14 @@ uvicorn app.main:app --reload
 
 3. Ownership control: teachers can only edit their own courses
 
-👨‍🎓 Student Enrollment
+## Student Enrollment
 1. Students can enroll in available courses
 
 2. Teachers can manually enroll students
 
 3. Enrollment restricted to users with a student role
 
-📝 Quizzes System
+## Quizzes System
 1. Teachers can create quizzes linked to lessons
 
 2. Each quiz can have multiple questions
@@ -71,21 +75,21 @@ uvicorn app.main:app --reload
 
 4. Students submit quizzes, and lesson progress is updated automatically based on quiz results
 
-📈 Progress Tracking
+## Progress Tracking
 1. Track lesson completion automatically
 
 2. Calculate course completion percentage for students
 
 3. Mark courses completed only when all lessons are passed
 
-📅 Attendance System
+## Attendance System
 1. Teachers/Admins can create attendance sessions (manual, auto, quiz-based)
 
 2. Students can check-in during the allowed time window
 
 3. Attendance records are linked to courses and lessons
 
-🔐 Authentication & Authorization
+## Authentication & Authorization
 
 JWT-based login system (access token and refresh token strategy)
 
@@ -93,13 +97,13 @@ Role-based access control (Student, Teacher, Admin)
 
 Session timeout handling with token refresh
 
-👑 Admin Panel
+## Admin Panel
 
-Manage users (list, search, view roles)
+1. Manage users (list, search, view roles)
 
-Manage courses (view all, edit, delete)
+2. Manage courses (view all, edit, delete)
 
-View enrollment and completion statistics
+3. View enrollment and completion statistics
 
 (Planned) Export system data (users, courses, quiz results) to CSV
 

@@ -34,4 +34,3 @@ class StudentAttendance(Base):
     __table_args__ = (
         UniqueConstraint('attendance_session_id', 'user_id', name='uix_session_student'),
     )
-

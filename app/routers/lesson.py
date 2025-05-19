@@ -6,18 +6,12 @@ from sqlalchemy.orm import Session
 from app.auth import get_current_user
 from app.crud import lesson as lesson_crud
 from app.crud import quiz as quiz_crud
-from app.database import SessionLocal
+from app.dependencies import get_db
 from app.models.user import User
 from app.schemas.lesson import LessonCreate, LessonUpdate, LessonResponse
 
 router = APIRouter(prefix="/lessons", tags=["lessons"])
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 @router.post("/course/{course_id}", response_model=LessonResponse)
 def create_lesson(course_id: int, lesson: LessonCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):

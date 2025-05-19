@@ -1,6 +1,8 @@
 # schemas/system_log.py
-from pydantic import BaseModel
 from datetime import datetime
+
+from pydantic import BaseModel
+
 
 class SystemLogResponse(BaseModel):
     id: int

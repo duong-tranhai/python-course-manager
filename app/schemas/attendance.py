@@ -1,6 +1,7 @@
-from pydantic import BaseModel, Field
 from datetime import datetime
 from typing import Optional, List
+
+from pydantic import BaseModel, Field
 
 from app.schemas.course import CourseResponse
 from app.schemas.lesson import LessonResponse

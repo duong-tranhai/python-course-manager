@@ -15,7 +15,7 @@ def get_db():
         db.close()
 
 @router.post("/", response_model=schema.RoleResponse)
-def create_role(role: schema.RoleCreate, db: Session = Depends(get_db)):
+def create_role(role: schema.RoleBase, db: Session = Depends(get_db)):
     return crud.create_role(db, role)
 
 @router.get("/", response_model=list[schema.RoleResponse])

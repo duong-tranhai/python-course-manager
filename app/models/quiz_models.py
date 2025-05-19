@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, JSON, DateTime, func
+from sqlalchemy import Column, Integer, String, ForeignKey, JSON, DateTime, func, Numeric
 from sqlalchemy.orm import relationship
 
 from app.models import Base
@@ -10,7 +10,7 @@ class LessonQuiz(Base):
     lesson_id = Column(Integer, ForeignKey("lessons.id"))
     title = Column(String, nullable=False)
     max_attempts = Column(Integer, nullable=False, default=1)
-    passing_score = Column(Integer, nullable=False, default=70)  # in percent
+    passing_score = Column(Numeric(5, 2), nullable=False, default=70)  # in percent
 
     questions = relationship("QuizQuestion", back_populates="quiz")
     lesson = relationship("Lesson", back_populates="quiz")
@@ -32,5 +32,5 @@ class StudentQuizResult(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
     quiz_id = Column(Integer, ForeignKey("lesson_quizzes.id"))
     selected_answers = Column(JSON)  # Dict[question_id] = selected_choice
-    score = Column(Integer)
+    score = Column(Numeric(5, 2))
     submitted_at = Column(DateTime(timezone=True), server_default=func.now())

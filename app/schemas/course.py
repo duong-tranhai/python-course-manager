@@ -30,8 +30,9 @@ class CreatorInCourse(BaseModel):
     id: int
     username: str
 
-    class Config:
-        orm_mode = True
+    model_config = {
+        "from_attributes": True
+    }
 
 class CourseAdminResponse(BaseModel):
     id: int
@@ -42,8 +43,9 @@ class CourseAdminResponse(BaseModel):
     lesson_count: int
     avg_completion_rate: float
 
-    class Config:
-        orm_mode = True
+    model_config = {
+        "from_attributes": True
+    }
 
 class CourseDetailResponse(BaseModel):
     id: int
@@ -53,5 +55,6 @@ class CourseDetailResponse(BaseModel):
     lessons: list[SimpleLessonResponse]
     users: list[SimpleUserResponse]
 
-    class Config:
-        orm_mode = True
+    model_config = {
+        "from_attributes": True
+    }

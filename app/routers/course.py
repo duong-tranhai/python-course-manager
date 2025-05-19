@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 from ..auth import get_current_user
 from ..crud import course as course_crud
 from ..database import SessionLocal
+from ..helpers.audit import log_action
 from ..models.user import User
 from ..schemas import course as course_schema
 from ..schemas import user as user_schema
@@ -25,6 +26,7 @@ def create_course(course: course_schema.CourseCreate, db: Session = Depends(get_
     if current_user.role_id != 1:
         raise HTTPException(status_code=403, detail="Only teachers can create courses")
 
+    log_action(db, user_id=current_user.id, action="course_created", detail=f"Created course: {course.title}")
     return course_crud.create_course(db=db, course=course, creator_id=current_user.id)
 
 # Update an existing course
@@ -76,5 +78,6 @@ def delete_course(course_id: int, db: Session = Depends(get_db), current_user: U
     if current_user.role_id != 1:
         raise HTTPException(status_code=403, detail="Only teachers can delete courses")
 
+    log_action(db, user_id=current_user.id, action="course_deleted", detail=f"Deleted course ID: {course_id}")
     return course_crud.delete_course(course_id, db, current_user.id)
 

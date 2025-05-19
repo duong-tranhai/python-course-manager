@@ -10,15 +10,17 @@ class UserCreate(UserBase):
 
 class UserResponse(UserBase):
     id: int
-    class Config:
-        orm_mode = True
+    model_config = {
+        "from_attributes": True
+    }
 
 class RoleInUser(BaseModel):
     id: int
     name: str
 
-    class Config:
-        orm_mode = True
+    model_config = {
+        "from_attributes": True
+    }
 
 class UserWithRoleResponse(BaseModel):
     id: int
@@ -26,13 +28,15 @@ class UserWithRoleResponse(BaseModel):
     email: str
     role: RoleInUser
 
-    class Config:
-        orm_mode = True
+    model_config = {
+        "from_attributes": True
+    }
 
 class SimpleUserResponse(BaseModel):
     id: int
     username: str
     email: str
 
-    class Config:
-        orm_mode = True
+    model_config = {
+        "from_attributes": True
+    }

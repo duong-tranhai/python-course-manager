@@ -10,10 +10,11 @@ class Course(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, unique=True, index=True)
     description = Column(String)
-    # store the list of enrolled users
+
+    # store the list of enrolled users - many-to-many
     users = relationship("UserCourse", back_populates="course")
 
-    # store the id of the course creator
+    # store the id of the course creator - many-to-one
     creator_id = Column(Integer, ForeignKey("users.id"))
     creator = relationship("User", back_populates="created_courses")
 

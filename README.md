@@ -33,7 +33,7 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 
-3. Install dependencies:
+## Install dependencies:
 
 ```
 pip install -r requirements.txt
@@ -49,80 +49,91 @@ DATABASE_URL=postgresql://user:password@localhost:5432/course_manager_db
 uvicorn app.main:app --reload
 ```
 
-# Features
+## 🚀 Features
 
-## Courses and Lessons
+### 👨‍🏫 Teacher
 
-1. Teachers/Admins can create, update, delete courses
+- **Course Management**: Create, edit, and delete courses.
+- **Lesson Management**: Manage lessons inside courses.
+- **Quiz Builder**: 
+  - Add quizzes to lessons.
+  - Multiple questions per quiz.
+  - Set max attempts and passing scores.
+- **Student Monitoring**:
+  - View enrolled students.
+  - Track lesson completion.
+  - Quiz analytics.
+- **Attendance Sessions**:
+  - Create manual / auto / quiz-based sessions.
+  - Mark student attendance manually.
+- **Export Tools**:
+  - Export attendance records as CSV.
+  - View quiz performance metrics.
 
-2. Each course contains multiple lessons
+---
 
-3. Ownership control: teachers can only edit their own courses
+### 👨‍🎓 Student
 
-## Student Enrollment
-1. Students can enroll in available courses
+- **Learning Dashboard**:
+  - View enrolled courses with visual progress.
+  - Navigate lessons and view quiz attempts.
+- **Quizzes**:
+  - Attempt quizzes with limited tries.
+  - View score and correct answers after submission.
+- **Attendance**:
+  - Check in during active sessions.
+  - Auto-marked absent if session ends without check-in.
+- **Feedback**:
+  - Submit course feedback after completion.
 
-2. Teachers can manually enroll students
+---
 
-3. Enrollment restricted to users with a student role
+### 🛠️ Admin
 
-## Quizzes System
-1. Teachers can create quizzes linked to lessons
+- **User Management**:
+  - View user list.
+  - Assign/remove roles like Student, Teacher, Admin.
+- **Role Management**:
+  - Create, edit, delete user roles.
+- **Course Oversight**:
+  - View all courses.
+  - Enrollment stats per course.
+- **System Logs**:
+  - Track user actions and system events.
+  - Device info and IP captured. (Planned)
+- **Login History** (Planned):
+  - Monitor user login/logout activity.
 
-2. Each quiz can have multiple questions
+---
 
-3. Configurable maximum attempts and passing scores
+## 🔐 Authentication
 
-4. Students submit quizzes, and lesson progress is updated automatically based on quiz results
+- JWT-based Auth with access & refresh tokens.
+- Session timeout modal with 1-click session refresh.
+- Role-based route protection for UI and API endpoints.
 
-## Progress Tracking
-1. Track lesson completion automatically
+---
 
-2. Calculate course completion percentage for students
+## ⚙️ Technical Stack
 
-3. Mark courses completed only when all lessons are passed
+- **Backend**: FastAPI, SQLAlchemy, Alembic, PostgreSQL (or SQLite)
+- **Frontend**: ReactJS, Axios, Bootstrap
+- **Auth**: JWT with Refresh Token Strategy
+- **Exports**: CSV downloads with Pandas
+- **Background Tasks**: Mark absent after session timeout
 
-## Attendance System
-1. Teachers/Admins can create attendance sessions (manual, auto, quiz-based)
+🌟 Planned Features
+- File upload for lessons
 
-2. Students can check-in during the allowed time window
+- Admin analytics dashboard (activity stats)
 
-3. Attendance records are linked to courses and lessons
+- PDF exports (for attendance or results)
 
-## Authentication & Authorization
+- Enhanced feedback dashboard
 
-JWT-based login system (access token and refresh token strategy)
+- Notification & reminder system
 
-Role-based access control (Student, Teacher, Admin)
+- Certificate generation (after course completion)
 
-Session timeout handling with token refresh
-
-## Admin Panel
-
-1. Manage users (list, search, view roles)
-
-2. Manage courses (view all, edit, delete)
-
-3. View enrollment and completion statistics
-
-(Planned) Export system data (users, courses, quiz results) to CSV
-
-(Planned) Track login activities for security
-
-# Technology Stack
-
-Layer	Technology
-
-Backend	FastAPI (Python)
-
-Database	PostgreSQL
-
-ORM	SQLAlchemy
-
-Authentication	OAuth2 + JWT (PyJWT)
-
-Migrations	Alembic
-
-Frontend	ReactJS (separate repo)
-
-HTTP Requests	Axios
+👨‍💻 Author
+- Developed by Duong Tran Hai with ❤️ using FastAPI + React.

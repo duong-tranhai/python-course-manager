@@ -6,21 +6,13 @@ from starlette.responses import StreamingResponse
 
 from app.auth import get_current_user
 from app.crud import attendance as crud
-from app.database import SessionLocal
+from app.dependencies import get_db
 from app.helpers.audit import log_action
 from app.models.user import User
 from app.schemas.attendance import (
     AttendanceSessionCreate, AttendanceSessionResponse,
     StudentAttendanceResponse, AttendanceBulkUpdate, AttendanceSessionWithCourseLesson
 )
-
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 router = APIRouter(prefix="/attendances", tags=["Attendance"])
 

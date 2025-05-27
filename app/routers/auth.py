@@ -10,18 +10,10 @@ from starlette.responses import JSONResponse
 
 from ..auth import verify_password, create_access_token, ALGORITHM, SECRET_KEY, create_refresh_token
 from ..crud import user as user_crud
-from ..database import SessionLocal
+from ..dependencies import get_db
 from ..helpers.audit import log_action
 from ..models.user import User
 from ..schemas.user import UserResponse, UserCreate
-
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 router = APIRouter(tags=["auth"])
 
@@ -69,9 +61,7 @@ def refresh_token(request: Request):
         # Optional: Verify refresh token against DB
         new_token = create_access_token({"sub": user_id}, expires_delta=timedelta(minutes=15))
         return {"access_token": new_token}
-    except ExpiredSignatureError:
-        raise HTTPException(status_code=401, detail="Refresh token expired")
-    except JWTError:
-        raise HTTPException(status_code=403, detail="Invalid refresh token")
-
-
+    except ExpiredSignatureError as exc:
+        raise HTTPException(status_code=401, detail="Refresh token expired") from exc
+    except JWTError as exc:
+        raise HTTPException(status_code=403, detail="Invalid refresh token") from exc

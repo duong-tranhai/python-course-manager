@@ -5,6 +5,19 @@ from app.models import Base
 
 
 class Course(Base):
+    """
+        Represents a course in the system.
+
+        Attributes:
+            id (int): Unique identifier for the course.
+            title (str): Title of the course.
+            description (str): A brief description of the course content.
+            creator_id (int): The user ID of the course creator (usually a teacher).
+
+        Relationships:
+            lessons (list): List of lessons associated with the course.
+            users (list): List of users enrolled in the course.
+    """
     __tablename__ = "courses"
 
     id = Column(Integer, primary_key=True, index=True)

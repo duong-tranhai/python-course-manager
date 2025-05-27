@@ -2,17 +2,11 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from ..crud import role as crud
-from ..database import SessionLocal
+from ..dependencies import get_db
 from ..schemas import role as schema
 
 router = APIRouter(prefix="/roles", tags=["Roles"])
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 @router.post("/", response_model=schema.RoleResponse)
 def create_role(role: schema.RoleBase, db: Session = Depends(get_db)):

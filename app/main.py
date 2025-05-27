@@ -9,7 +9,8 @@ from starlette.status import HTTP_401_UNAUTHORIZED
 
 from app.auth import get_current_user
 from app.routers import user as user_router, role as role_router, course as course_router, auth as auth_router, \
-    lesson as lesson_router, quiz as quiz_router, admin as admin_router,  attendance as attendance_router
+    lesson as lesson_router, quiz as quiz_router, admin as admin_router,  attendance as attendance_router, \
+    chat as chat_router
 from app.scheduler import start_scheduler
 
 app = FastAPI()
@@ -27,7 +28,8 @@ async def custom_http_exception_handler(request: Request, exc: StarletteHTTPExce
     return await request.app.default_exception_handler(request, exc)
 
 
-# You can add additional URLs to this list, for example, the frontend's production domain, or other frontends.
+# You can add additional URLs to this list, for example,
+# the frontend 's production domain, or other frontends.
 allowed_origins = [
     "http://localhost:3000"
 ]
@@ -53,3 +55,4 @@ app.include_router(quiz_router.router, dependencies=[Depends(get_current_user)])
 app.include_router(admin_router.router, dependencies=[Depends(get_current_user)])
 app.include_router(attendance_router.router, dependencies=[Depends(get_current_user)])
 app.include_router(auth_router.router)
+app.include_router(chat_router.router)

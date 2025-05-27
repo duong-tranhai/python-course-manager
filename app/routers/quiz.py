@@ -7,19 +7,13 @@ from sqlalchemy.orm import Session
 
 from app.auth import get_current_user
 from app.crud import quiz as quiz_crud
-from app.database import SessionLocal
+from app.dependencies import get_db
 from app.helpers.audit import log_action
 from app.models.user import User
 from app.schemas.quiz import QuizCreate, QuizSubmitRequest, QuizUpdate
 
 router = APIRouter(prefix="/quizzes", tags=["Quizzes"])
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 @router.post("/", status_code=201)
 def create_quiz(quiz: QuizCreate, db: Session = Depends(get_db)):

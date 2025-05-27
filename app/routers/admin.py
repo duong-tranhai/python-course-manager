@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from app.auth import get_current_user
 from app.crud import admin as admin_crud
-from app.database import SessionLocal
+from app.dependencies import get_db
 from app.helpers.audit import log_action
 from app.models.user import User
 from app.schemas.course import CourseAdminResponse, CourseDetailResponse, CourseUpdate
@@ -15,12 +15,7 @@ from app.schemas.user import UserWithRoleResponse
 
 router = APIRouter(prefix="/admin", tags=["Admin"])
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+
 
 def verify_admin(user: User = Depends(get_current_user)):
     if user.role.name != "admin":

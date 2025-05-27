@@ -3,18 +3,12 @@ from sqlalchemy.orm import Session
 
 from ..auth import get_current_user
 from ..crud import user as crud, feedback as feedback_crud, course as course_crud
-from ..database import SessionLocal
+from ..dependencies import get_db
 from ..models.user import User
 from ..schemas import user as schema, feedback as feedback_schema
 
 router = APIRouter(prefix="/users", tags=["Users"])
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 @router.post("/", response_model=schema.UserResponse)
 def create_user(user: schema.UserCreate, db: Session = Depends(get_db)):

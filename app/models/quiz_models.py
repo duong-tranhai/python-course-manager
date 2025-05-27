@@ -1,9 +1,10 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, JSON, DateTime, func, Numeric
+from sqlalchemy import Column, Integer, String, ForeignKey, JSON, DateTime, Numeric
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
 
 from app.models import Base
 
-
+# pylint: disable=too-few-public-methods
 class LessonQuiz(Base):
     __tablename__ = "lesson_quizzes"
     id = Column(Integer, primary_key=True)

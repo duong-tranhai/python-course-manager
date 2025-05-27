@@ -28,6 +28,15 @@ def update_course(db: Session, course_id: int, course: schema.CourseUpdate):
     return db_course
 
 def mark_course_complete(course_id: int, current_user_id: int, db: Session):
+    """
+    Mark the course completed after the user has done all the lessons,
+    Need to check if the user is in the course or not.
+
+    :param course_id: The ID of the course to be fetched
+    :param current_user_id: The ID of the user which enrolled in this course
+    :param db: The database session to execute the query.
+    :return: JSON object with message attribute if successfully
+    """
     # Check if enrolled
     enrollment = db.query(UserCourse).filter_by(user_id=current_user_id, course_id=course_id).first()
     if not enrollment:
@@ -53,6 +62,26 @@ def mark_course_complete(course_id: int, current_user_id: int, db: Session):
     enrollment.is_completed = True
     db.commit()
     return {"message": "Course marked as completed"}
+
+
+def get_course_by_id(course_id: int, db: Session) -> Course:
+    """
+    Retrieves a course by its ID.
+
+    Args:
+        course_id (int): The ID of the course to be fetched.
+        db (Session): The database session to execute the query.
+
+    Returns:
+        Course: The course object corresponding to the provided ID.
+
+    Raises:
+        HTTPException: If no course is found with the provided ID.
+    """
+    course = db.query(Course).filter(Course.id == course_id).first()
+    if course is None:
+        raise HTTPException(status_code=404, detail="Course not found")
+    return course
 
 def get_courses(db: Session):
     return db.query(Course).all()

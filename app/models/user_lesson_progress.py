@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, Boolean, ForeignKey
 from app.models import Base
 
+# pylint: disable=too-few-public-methods
 class UserLessonProgress(Base):
     __tablename__ = "user_lesson_progress"
 

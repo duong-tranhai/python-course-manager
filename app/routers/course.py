@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from ..auth import get_current_user
 from ..crud import course as course_crud
-from ..database import SessionLocal
+from ..dependencies import get_db
 from ..helpers.audit import log_action
 from ..models.user import User
 from ..schemas import course as course_schema
@@ -13,12 +13,6 @@ from ..schemas import user as user_schema
 
 router = APIRouter(prefix="/courses", tags=["Courses"])
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 # Create a new course
 @router.post("/", response_model=course_schema.CourseResponse)
@@ -80,4 +74,3 @@ def delete_course(course_id: int, db: Session = Depends(get_db), current_user: U
 
     log_action(db, user_id=current_user.id, action="course_deleted", detail=f"Deleted course ID: {course_id}")
     return course_crud.delete_course(course_id, db, current_user.id)
-
